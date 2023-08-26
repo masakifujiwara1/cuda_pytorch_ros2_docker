@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
+FROM osrf/ros:humble-desktop-full
 
 WORKDIR /home
 ENV HOME /home
@@ -16,20 +16,20 @@ SHELL ["/bin/bash", "-c"]
 # install vim
 RUN apt-get update -qq
 RUN apt-get install -y tzdata
-RUN apt-get update && apt-get install -y vim git lsb-release sudo gnupg htop gedit tmux curl
+RUN apt-get update && apt-get install -y vim git lsb-release sudo gnupg tmux
 
 # install python3
-RUN apt-get install -y python3 python3-pip
+# RUN apt-get install -y python3 python3-pip
 
 # install pytorch
-RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+# RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 
 # ros2 humble setup
-RUN git clone --depth 1 https://github.com/ryuichiueda/ros2_setup_scripts
-RUN ./ros2_setup_scripts/setup.bash -xv
+# RUN git clone --depth 1 https://github.com/ryuichiueda/ros2_setup_scripts
+# RUN ./ros2_setup_scripts/setup.bash -xv
 
 # RUN apt-get install -y gazebo ros-humble-gazebo-* 
-RUN apt-get install -y ros-humble-rqt-* 
+# RUN apt-get install -y ros-humble-rqt-* 
 
 # set ros2 workspace
 COPY config/git_clone.sh /home/git_clone.sh
@@ -43,7 +43,7 @@ COPY config/.bashrc /home/.bashrc
 COPY config/.vimrc /home/.vimrc
 
 # clean workspace
-RUN rm -rf git_clone.sh ros2_setup_scripts
+RUN rm -rf git_clone.sh
 
 # RUN apt-get install -y ros-humble-dynamixel-sdk ros-humble-turtlebot3-msgs ros-humble-turtlebot3
 
